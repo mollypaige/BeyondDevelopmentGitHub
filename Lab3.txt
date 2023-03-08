@@ -1,0 +1,87 @@
+QUERY THIS TEXTFILE INTO THE LAB3 DATABASE FIRST!
+
+CREATE TABLE Instructor(
+	instructorID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	instructorFirstName nvarchar(30) NOT NULL,
+	instructorLastName nvarchar(32) NOT NULL,
+	instructorEmail nvarchar(30) NOT NULL,
+	instructorUsername nvarchar(30));
+
+
+CREATE TABLE Location(
+	locationID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	roomNumber int NOT NULL,
+	building nvarchar(30));
+
+
+CREATE TABLE OfficeHours(
+	officeHoursID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	officeHoursDay nvarchar(30) NOT NULL,
+	startTime time NOT NULL,
+	endTime time NOT NULL,
+	instructorID int NOT NULL FOREIGN KEY REFERENCES Instructor(instructorID),
+	roomNumber int FOREIGN KEY REFERENCES Room(roomNumber));
+
+
+CREATE TABLE Students(
+	studentID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	studentUsername nvarchar(50) NOT NULL,
+	studentFirstName nvarchar(30) NOT NULL,
+	studentLastName nvarchar(30) NOT NULL,
+	studentEmail nvarchar(30) NOT NULL);
+	
+CREATE TABLE SignUp(
+	queueID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	officeHoursID int FOREIGN KEY REFERENCES OfficeHours(officeHoursID),
+	studentID	int FOREIGN KEY REFERENCES Students(studentID));
+
+CREATE TABLE Course(
+	courseID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	courseType nvarchar(30) NOT NULL,
+	queueID int FOREIGN KEY REFERENCES SignUp(queueID));
+
+
+
+INSERT INTO Instructor (instructorFirstName, instructorLastName, instructorEmail, instructorUsername) VALUES ('John','Johnson','johnjohnson@gmail.com', 'admin');
+INSERT INTO Instructor (instructorFirstName, instructorLastName, instructorEmail, instructorUsername) VALUES ('Joe','Thomas','joethomas@gmail.com', 'joethomas');
+INSERT INTO Instructor (instructorFirstName, instructorLastName, instructorEmail, instructorUsername) VALUES ('Lindsey','Hoffman','lindseyhoffman@gmail.com', 'lindseyhoffman');
+INSERT INTO Instructor (instructorFirstName, instructorLastName, instructorEmail, instructorUsername) VALUES ('Guy','Buffing','guybuffing@gmail.com', 'guybuffing');
+INSERT INTO Instructor (instructorFirstName, instructorLastName, instructorEmail, instructorUsername) VALUES ('Frank','Roster','frankroster@gmail.com', 'frankroster');
+
+
+INSERT INTO Location (roomNumber, building) VALUES (3009, 'Showker');
+INSERT INTO Location (roomNumber, building) VALUES (3008, 'Showker');
+INSERT INTO Location (roomNumber, bulding) VALUES (3012, 'Showker');
+INSERT INTO Location (roomNumber, bulding) VALUES (3010, 'Hartman');
+INSERT INTO Location (roomNumber, bulding) VALUES (5005, 'Shokwer');
+
+
+INSERT INTO OfficeHours (officeHoursDay, startTime, endTime, instructorID, roomNumber) VALUES ('Tuesday', '10:00:00', '12:30:00', 3, 1);
+INSERT INTO OfficeHours (officeHoursDay, startTime, endTime, instructorID, roomNumber) VALUES ('Friday', '12:00:00', '2:30:00', 1, 1);
+INSERT INTO OfficeHours (officeHoursDay, startTime, endTime, instructorID, roomNumber) VALUES ('Monday', '1:00:00', '2:30:00', 3, 2);
+INSERT INTO OfficeHours (officeHoursDay, startTime, endTime, instructorID, roomNumber) VALUES ('Tuesday', '10:00:00', '12:30:00', 2, 4);
+INSERT INTO OfficeHours (officeHoursDay, startTime, endTime, instructorID, roomNumber) VALUES ('Wednesday', '3:00:00', '5:30:00', 4, 5);
+
+
+INSERT INTO Students (studentUsername, studentFirstName, studentLastName, studentEmail) VALUES ('admin', 'Nick', 'Smith', 'nicksmith@gmail.com');
+INSERT INTO Students (studentUsername, studentFirstName, studentLastName, studentEmail) VALUES ('james', 'James', 'Tonley', 'jamestonley@gmail.com');
+INSERT INTO Students (studentUsername, studentFirstName, studentLastName, studentEmail) VALUES ('arthur', 'Arthur', 'Furgus', 'arthurfurgus@gmail.com');
+INSERT INTO Students (studentUsername, studentFirstName, studentLastName, studentEmail, studentPartner) VALUES ('nate', 'Nate', 'Earl', 'nateearl@gmail.com', 1);
+INSERT INTO Students (studentUsername, studentFirstName, studentLastName, studentEmail, studentPartner) VALUES ('amanda', 'Amanda', 'Rye', 'amandarye@gmail.com', 3);
+
+
+INSERT INTO SignUp (officeHoursID, studentID) VALUES (2, 5);
+INSERT INTO SignUp (officeHoursID, studentID) VALUES (3, 1);
+INSERT INTO SignUp (officeHoursID, studentID) VALUES (3, 2);
+INSERT INTO SignUp (officeHoursID, studentID) VALUES (4, 4);
+INSERT INTO SignUp (officeHoursID, studentID) VALUES (5, 3);
+
+INSERT INTO Course (courseType, queueID) VALUES ('COB', 4);
+INSERT INTO Course (courseType, queueID) VALUES ('CIS', 4);
+INSERT INTO Course (courseType, queueID) VALUES ('CIS', 1);
+INSERT INTO Course (courseType, queueID) VALUES ('COB', 3);
+INSERT INTO Course (courseType, queueID) VALUES ('OPS', 2);
+	
+
+
+

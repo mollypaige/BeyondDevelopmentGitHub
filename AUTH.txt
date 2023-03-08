@@ -1,0 +1,71 @@
+QUERY THE FOLLOWING ITEMS INTO THE DATABASE IN THE CURRENT ORDER THEY ARE IN!
+
+CREATE TABLE StudentHashedCredentials(
+	StudentHashedCredentialsID int Identity(1,1) PRIMARY KEY,
+	Username nvarchar(200),
+	Password nvarchar(200),
+	firstName nvarchar(200),
+	lastName nvarchar(200),
+	email nvarchar(200)
+);
+
+CREATE TABLE FacultyHashedCredentials(
+	FacultyHashedCredentialsID int Identity(1,1) PRIMARY KEY,
+	Username nvarchar(200),
+	Password nvarchar(200),
+	firstName nvarchar(200),
+	lastName nvarchar(200),
+	email nvarchar(200)
+);
+
+INSERT INTO StudentHashedCredentials (Username, Password, firstName, lastName, email) VALUES ('admin', '1000:3tdjhgFN/IEmfCtKsZdG58cB9QQHWMCB:QPtX5REHRFNPMbOLl+oyP+mNTq8=', 'Nick', 'Smith', 'nicksmith@gmail.com');
+
+
+INSERT INTO FacultyHashedCredentials (Username, Password, firstName, lastName, email) VALUES ('admin', '1000:tyIujuC3oHkSR2SOGgGM/mQpgLM3+0Fh:H2F6OPgay2pL4/HPpXnqVmhmvsE=', 'John', 'Johnson', 'johnjohnson@gmail.com');
+INSERT INTO FacultyHashedCredentials (Username, Password, firstName, lastName, email) VALUES ('joethomas', '1000:Qqu0ZWrpDabfGS1O30sO13GfzPFULk8P:ljwQQdEUikq2UeM49uOLDUByA8o=', 'Joe', 'Thomas', 'joethomas@gmail.com');
+INSERT INTO FacultyHashedCredentials (Username, Password, firstName, lastName, email) VALUES ('lindseyhoffman', '1000:X0fv8yUUqbrQ2XKdQtgtO6aWO75OsoJD:lcae2o07zcFmDZf7lEs7EfKLZsM=', 'Lindsey', 'Hoffman', 'lindseyhoffman@gmail.com');
+INSERT INTO FacultyHashedCredentials (Username, Password, firstName, lastName, email) VALUES ('guybuffing', '1000:tE1VeReL1EQ5py/fCP/nQf/6tuMESLsp:p5kurqKT+zVPRQL+gxQByP2cRpg=', 'Guy', 'Buffing', 'guybuffing@gmail.com');
+INSERT INTO FacultyHashedCredentials (Username, Password, firstName, lastName, email) VALUES ('frankr', '1000:HwS7wYEcqQxhpktCKitnACUyQtmHZ+bt:gA1guXHTH9wRlJQh9ZppOr9eUgI=', 'Frank', 'Roster', 'frankroster@gmail.com');
+
+
+QUERY THE FOLLOWING TRIGGERS INTO THE AUTH DATABASE!
+
+***TRIGGERS***
+
+
+
+create trigger tg_NewStudent
+on StudentHashedCredentials
+after insert
+as
+begin
+
+	declare @Username varchar(50), @firstName varchar(50), @lastName varchar(50), @email varchar(50)
+
+	select @Username = inserted.Username, @firstName = inserted.firstName, @lastName = inserted.lastName, @email = inserted.email
+	from inserted
+
+	INSERT INTO Lab3.dbo.Students(studentUsername, StudentFirstName, StudentLastName, studentEmail)
+	VALUES (@Username, @firstName, @lastName, @email);
+
+	end;
+
+
+
+
+create trigger tg_NewFaculty
+on FacultyHashedCredentials
+after insert
+as
+begin
+
+	declare @Username varchar(50), @firstName varchar(50), @lastName varchar(50), @email varchar(50)
+
+	select @Username = inserted.Username, @firstName = inserted.firstName, @lastName = inserted.lastName, @email = inserted.email
+	from inserted
+
+	INSERT INTO Lab3.dbo.Instructor(instructorFirstName, instructorLastName, instructorEmail, instructorUsername)
+	VALUES (@firstName, @lastName, @email, @Username);
+
+	end;
+

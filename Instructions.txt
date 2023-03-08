@@ -1,0 +1,7 @@
+Ben McDonald, Lawan Rasul, And Younes Ziewki worked together.
+
+Testing credentials available for use:
+Username: admin
+Password: password
+
+We have two stored procedures. One for the student view and one for faculty view.

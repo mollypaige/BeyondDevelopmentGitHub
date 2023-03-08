@@ -1,0 +1,38 @@
+FACULTY STORED PROCEDURE:
+
+create procedure Lab3_facultyHashedLogin
+-- define parameters or incoming data.
+@Username as nvarchar(50)
+
+
+
+as
+begin
+
+	select Password
+	from FacultyHashedCredentials
+	where Username = @Username;
+
+
+
+end;
+
+
+STUDENT STORED PROCEDURE:
+
+create procedure Lab3_studentHashedLogin
+-- define parameters or incoming data.
+@Username as nvarchar(50)
+
+
+
+as
+begin
+
+	select Password
+	from StudentHashedCredentials
+	where Username = @Username;
+
+
+
+end;
