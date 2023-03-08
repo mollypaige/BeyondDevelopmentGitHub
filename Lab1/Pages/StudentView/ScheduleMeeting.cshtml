@@ -1,0 +1,70 @@
+﻿@page
+@model Lab1.Pages.StudentView.ScheduleMeetingModel
+@{
+
+    // Page title
+    ViewData["Title"] = "Schedule a Meeting";
+}
+
+<h3>Fill Out the Form! </h3>
+
+<form asp-page="ScheduleMeeting">
+    <label>Meeting Name: </label>
+    <input type="text" asp-for="@Model.NewMeeting.meetingName" />
+    <span asp-validation-for="@Model.NewMeeting.meetingName" class="text-danger"></span>
+    <br />
+    <br />
+    <label>Meeting Date: </label>
+    <input type="text" asp-for="@Model.NewMeeting.meetingDate" />
+    <span asp-validation-for="@Model.NewMeeting.meetingDate" class="text-danger"></span>
+    <br />
+    <br />
+    <label>Meeting Start Time: </label>
+    <input type="text" asp-for="@Model.NewMeeting.meetingStart" />
+    <span asp-validation-for="@Model.NewMeeting.meetingStart" class="text-danger"></span>
+    <br />
+    <br />
+    <label>Meeting End Time: </label>
+    <input type="text" asp-for="@Model.NewMeeting.meetingEnd" />
+    <span asp-validation-for="@Model.NewMeeting.meetingEnd" class="text-danger"></span>
+    <br />
+    <br />
+    <label>Instructor Name: </label>
+    <select asp-for="@Model.NewMeeting.instructorID" class="form-select">
+            @{
+                // Loop through the list of instructors and create an option for each one
+                foreach (var instructor in Model.InstructorList)
+                {
+                                <option value="@instructor.instructorID">@instructor.instructorFirstName @instructor.instructorLastName</option>
+                }
+            }
+    </select>
+    <br />
+    <br />
+    <label>Student Name: </label>
+    <select asp-for="@Model.NewMeeting.studentID" class="form-select">
+            @{
+                // Loop through the list of students and create an option for each one
+                foreach (var students in Model.StudentList)
+                {
+                                <option value="@students.StudentID">@students.StudentFirstName @students.StudentLastName</option>
+                }
+            }
+    </select>
+    
+    <br />
+    <br />
+    <input type="submit" value="Create New Meeting ->" />
+    <button asp-page="ScheduleMeeting" asp-page-handler="PopulateHandler" formnovalidate>Populate</button>
+    <button asp-page="ScheduleMeeting" asp-page-handler="ClearHandler">Clear</button>
+
+</form>
+
+@if (Model.SelectMessage != null)
+{
+    <p>@Model.SelectMessage</p>
+}
+
+<br />
+
+<a href="/StudentView/StudentHome">Go Back to Home</a>

@@ -1,0 +1,74 @@
+﻿@page
+@using System.Data.SqlClient;
+@using Lab1.Pages.DB;
+@model Lab1.Pages.StudentView.UpcomingOfficeHoursModel
+@{
+
+    // Page title
+    ViewData["Title"] = "Upcoming Office Hours";
+}
+
+<br />
+<br />
+
+<h2>Upcoming Office Hours Times: </h2>
+
+<table class="table table-bordered table-responsive table-striped table-hover">
+    <thead class="bg-light">
+        <tr>
+            <th>Day: </th>
+            <th>Start Time: </th>
+            <th>End Time: </th>
+            <th>Room Number: </th>
+            <th>Instructor Name: </th>
+            <th>People in front of you: </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+
+            string sqlQuery = "select Queue.queueID, OfficeHours.officeHoursID, OfficeHours.officeHoursDay, OfficeHours.startTime, OfficeHours.endTime, OfficeHours.roomNumber, Instructor.instructorFirstName, Instructor.instructorLastName" +
+            " from OfficeHours, Instructor, Queue where OfficeHours.instructorID = Instructor.instructorID AND Queue.officeHoursID = OfficeHours.officeHoursID" +
+            " AND OfficeHours.officeHoursID IN(select officeHoursID from queue where studentID = " + HttpContext.Session.GetInt32("studentID") + ") AND Queue.studentID = " + HttpContext.Session.GetInt32("studentID") + ";";
+
+
+            SqlDataReader sqlResults = DBClass.GeneralReaderQuery(sqlQuery);
+
+            while (sqlResults.Read())
+            {
+                <tr class="bg-light">
+                    <td>@sqlResults["officeHoursDay"]</td>
+                    <td>@sqlResults["startTime"]</td>
+                    <td>@sqlResults["endTime"]</td>
+                    <td>@sqlResults["roomNumber"]</td>
+                    <td>@sqlResults["instructorFirstName"] @sqlResults["instructorLastName"]</td>
+                    <td>
+                        <a asp-page="NumberInLine" asp-page-handler="NumInLine" class="btn btn-primary Btn" asp-route-queueid="@sqlResults["queueID"]" asp-route-officehoursid="@sqlResults["officeHoursID"]">View</a>
+                    </td>
+                </tr>
+            }
+
+            DBClass.LabDBConnection.Close();
+        }
+    </tbody>
+</table>
+
+<br />
+<a href="/StudentView/StudentHome">Go Back to Home</a>
+
+<style>
+
+
+    .Btn {
+
+        background-color: goldenrod;
+        color: black;
+
+    }
+
+    .Btn:hover {
+        background-color: white;
+        color: black;
+    }
+
+</style>

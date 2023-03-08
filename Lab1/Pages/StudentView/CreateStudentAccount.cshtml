@@ -1,0 +1,57 @@
+﻿@page
+@model Lab1.Pages.StudentView.CreateStudentAccountModel
+@{
+}
+
+<form asp-page="CreateStudentAccount">
+    <label>Enter New Username:</label>
+    <input asp-for="Username" class="form-control" placeholder="Enter Username" />
+    <br />
+    <label>Enter New User's Password:</label>
+    <input asp-for="Password" class="form-control" type="password" />
+    <br />
+    <label>Enter New User's First Name:</label>
+    <input asp-for="studentFirstName" class="form-control" />
+    <br />
+    <label>Enter New User's Last Name:</label>
+    <input asp-for="studentLastName" class="form-control" />
+    <br />
+    <label>Enter New User's Email:</label>
+    <input asp-for="studentEmail" class="form-control"/>
+    <br />
+    <input type="submit" class="btn btn-primary Btns" />
+</form>
+@{
+    if (ViewData["UserCreate"] != null)
+    {
+        <p class="text-success">@ViewData["UserCreate"]</p>
+    }
+
+}
+
+<style>
+
+
+     form {
+         width: 350px;
+         color: white;
+         position: center;
+  
+     }
+
+     .Btns
+     {
+        width: 350px;
+        background-color: goldenrod;
+        color: black;
+        font-family: Candara;
+        align-content: center;
+     }
+     .Btns:hover {
+            background-color: white;
+            outline: 2px solid goldenrod;
+            color: black;
+        }
+    
+
+</style

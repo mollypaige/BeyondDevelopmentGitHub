@@ -1,0 +1,24 @@
+﻿@page
+@model Lab1.Pages.Student.DashboardModel
+
+
+<!-- Displays a header -->
+<h3>Class Selection Page</h3>
+
+<!-- Form to submit selected class -->
+<form method="post">
+    <!-- Drop-down list of classes to choose from -->
+    <div class="form-group">
+        <label for="classSelection">Select Class:</label>
+        <select class="form-control" id="classSelection" name="SelectedClass" asp-for="SelectedClass">
+            <!-- Generates an option for each class in the model -->
+            @foreach (var cl in Model.ClassList)
+            {
+                <option value="@cl.classID">@cl.className</option>
+            }
+        </select>
+    </div>
+    <br />
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

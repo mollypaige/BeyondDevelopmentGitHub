@@ -1,0 +1,61 @@
+﻿@page
+@model Lab1.Pages.Faculty.WaitingRoomModel
+@{
+
+    // Page title
+    ViewData["Title"] = "Waiting Room";
+}
+<h2>Waiting Room</h2>
+
+<table class="table table-bordered table-responsive table-hover">
+    <thead class="bg-light">
+        <tr>
+            <th>Student First Name: </th>
+            <th>Student Last Name: </th>
+            <th>Student Email</th>
+            <th>Edit/Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var students in Model.StudentList)
+            {
+                <tr class="bg-light">
+                    <td>@students.StudentFirstName</td>
+                    <td>@students.StudentLastName</td>
+                    <td>@students.StudentEmail</td>
+                    <td>
+                        <a asp-page="WaitingRoom" asp-page-handler="Remove" class="btn btn-primary Btn" asp-route-studentid="@students.StudentID" asp-route-officehoursid="@Model.OfficeHoursID">Remove</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+
+@if (Model.SelectMessage != null)
+{
+    <p>@Model.SelectMessage</p>
+}
+
+<br />
+
+<a href="/Faculty/FacultyHome">Go Back to Home</a>
+
+<style>
+
+    .Btn {
+        background-color: goldenrod;
+        color: black;
+
+    }
+
+    .Btn:hover {
+        background-color: white;
+        color: black;
+    }
+
+</style>

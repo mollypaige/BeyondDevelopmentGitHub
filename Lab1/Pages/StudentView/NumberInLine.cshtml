@@ -1,0 +1,14 @@
+﻿@page
+@model Lab1.Pages.StudentView.NumberInLineModel
+@{
+}
+
+
+@{
+    foreach (var num in Model.numInLine)
+    {
+        <h4>There are @num people ahead of you.</h4>
+    }
+}
+
+<a href="/StudentView/UpcomingOfficeHours">Back</a>

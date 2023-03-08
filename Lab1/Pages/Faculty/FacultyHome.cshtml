@@ -1,0 +1,90 @@
+﻿@page
+@using System.Data.SqlClient;
+@using Lab1.Pages.DB;
+@model Lab1.Pages.Faculty.FacultyHomeModel
+@{
+    ViewData["Title"] = "Faculty Home";
+}
+<!-- Display a form with a dropdown menu to select an instructor -->
+<h3>Welcome @HttpContext.Session.GetString("instructorFirstName")! </h3>
+<br />
+<br />
+<section class="border" >
+
+<h4> Here are your office hours! </h4>
+<table class="table table-bordered table-striped table-responsive table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Day of Week:</th>
+            <th>Start Time:</th>
+            <th>End Time:</th>
+            <th>Room Number:</th>
+            <th>Go-to: </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            // Loop through the list of office hours and create a row for each one
+            foreach (var officehours in Model.YourOfficeHours)
+            {
+                <tr>
+                    <td>@officehours.officeHoursDay</td>
+                    <td>@officehours.startTime</td>
+                    <td>@officehours.endTime</td>
+                    <td>@officehours.roomNumber</td>
+                    <td>
+                        <a asp-page="WaitingRoom" asp-page-handler="Students" class="btn btn-primary" asp-route-officehoursid="@officehours.officeHoursID">Select</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+<br />
+<br />
+
+<h4>Your Upcoming Meetings</h4>
+<table class="table table-bordered table-striped table-responsive table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Meeting Name: </th>
+            <th>Meeting Date: </th>
+            <th>Meeting Start: </th>
+            <th>Meeting End: </th>
+            <th>Student First Name:</th>
+            <th>Student Last Name: </th>
+        </tr>
+    </thead>
+    <tbody> 
+        @{
+            string sqlQuery = "select m.meetingName, m.meetingDate, m.meetingStart, m.meetingEnd, s.studentFirstName, s.studentLastName";
+            sqlQuery += " from Meeting m, Students s, Instructor i where i.instructorID = m.instructorID AND s.studentID = m.studentID AND ";
+                sqlQuery += "i.instructorFirstName = '" + HttpContext.Session.GetString("instructorFirstName") + "' AND i.instructorLastName = '" + HttpContext.Session.GetString("instructorLastName") + "';";
+
+            SqlDataReader sqlResults = DBClass.GeneralReaderQuery(sqlQuery);
+
+            while (sqlResults.Read())
+            {
+                <tr>
+                    <td>@sqlResults["meetingName"]</td>
+                    <td>@sqlResults["meetingDate"]</td>
+                    <td>@sqlResults["meetingStart"]</td>
+                    <td>@sqlResults["meetingEnd"]</td>
+                    <td>@sqlResults["studentFirstName"]</td>
+                    <td>@sqlResults["studentLastName"]</td>
+                </tr>
+            }
+
+            DBClass.LabDBConnection.Close();
+        }
+    </tbody>
+</table>
+</section>
+
+<br />
+<br />
+
+<a asp-page="/Faculty/InstructorLogin" asp-route-back="true" class="btn btn-primary">Log Out</a>

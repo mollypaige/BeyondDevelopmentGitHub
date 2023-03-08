@@ -1,0 +1,77 @@
+﻿@page
+@model Lab1.Pages.Faculty.InstructorLoginModel
+@{
+}
+
+@{
+    if (HttpContext.Session.GetString("FacultyUsername") == null)
+    {
+        <form asp-page-handler="InstructorLogin" method="post">
+            <label>Instructor Username: </label>
+            <input asp-for="FacultyUsername" class="form-control" placeholder="Enter Username" />
+            <br />
+            <label>Instructor Password:</label>
+            <input asp-for="Password" class="form-control" type="password" placeholder="Enter Password" />
+            <br />
+            <input type="submit" class="btn btn-primary Btns" value="login" />
+            <br />
+            <br />
+
+            <a class="btn btn-outline-primary Btns" asp-page="/Index"> Back </a>
+        </form>
+    }
+
+}
+
+
+@{
+    if (HttpContext.Session.GetString("FacultyUsername") != null)
+    {
+        <p class="text-success">@ViewData["LoginMessage"]</p>
+    }
+    else
+    {
+        <p class="text-danger">@ViewData["LoginMessage"]</p>
+    }
+}
+
+@{
+
+    if (HttpContext.Session.GetString("FacultyUsername") != null)
+    {
+
+        <p>User @HttpContext.Session.GetString("FacultyUsername") is logged in, are you sure you want to Log out?</p>
+        <br />
+        <a class="btn btn-outline-primary" asp-page="/Faculty/InstructorLogin" asp-route-logout="true">Logout</a>
+        <a class="btn btn-primary" asp-page="/Faculty/FacultyHome"> Next </a>
+    }
+}
+
+<br />
+<br />
+
+<a class="btn btn-outline-primary Btns" asp-page="CreateAccount">Create Account</a>
+
+<style>
+
+
+    form {
+        width: 350px;
+        color: white;
+        position: center;
+    }
+
+    .Btns {
+        width: 350px;
+        background-color: goldenrod;
+        color: black;
+        font-family: Candara;
+        align-content: center;
+    }
+
+        .Btns:hover {
+            background-color: white;
+            outline: 2px solid goldenrod;
+            color: black;
+        }
+</style>

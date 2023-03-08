@@ -1,0 +1,158 @@
+﻿@page
+@model Lab1.Pages.StudentView.HomeModel
+@{
+    // Page title
+    ViewData["Title"] = "Student Home";
+}
+
+<h2>Welcome, @HttpContext.Session.GetString("studentFirstName")!</h2>
+<br />
+<br />
+<section class="Secion">
+<h4>Begin signing up for Office Hours by selecting an Instructor to search for: </h4>
+<br />
+    <form asp-page-handler="SearchInstructor" method="post" class="form-vertical">
+        <label for="SelectedInstructorFirstName">Type in Instructor's First Name:</label>
+        <input asp-for="SelectedInstructorFirstName" placeholder="First Name" id="SelectedInstructorFirstName" />
+        <span asp-validation-for="SelectedInstructorFirstName" class="text-danger"></span>
+
+        <label for="SelectedInstructorLastName">Type in Instructor's Last Name:</label>
+        <input asp-for="SelectedInstructorLastName" placeholder="Last Name" id="SelectedInstructorLastName" />
+        <span asp-validation-for="SelectedInstructorLastName" class="text-danger"></span>
+
+        <input class="btn btn-primary Btn1 "type="submit" value="Submit Name" />
+    </form>
+
+
+<br />
+<br />
+<br />
+<br />
+
+</section>
+
+<h4>Office Hours</h4>
+<table class="table table-bordered table-responsive table-hover">
+    <thead class="bg-light">
+        <tr>
+            <th>Day of Week:</th>
+            <th>Start Time:</th>
+            <th>End Time:</th>
+            <th>Room Number:</th>
+            <th>Sign-Up: </th>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+        // Loop through the list of office hours and create a row for each one
+        foreach (var officehours in Model.OfficeHoursList)
+        {
+            <tr class="bg-light"> 
+                <td>@officehours.officeHoursDay</td>
+                <td>@officehours.startTime</td>
+                <td>@officehours.endTime</td>
+                <td>@officehours.roomNumber</td>
+                <td>
+                    @*<a asp-page="OfficeHoursSignUp" asp-page-handler="OfficeHours" class="btn btn-primary" asp-route-officehoursid="@officehours.officeHoursID">Select</a>*@
+                   <a asp-page="StudentHome" asp-page-handler="SignUp" class="btn btn-primary Btn1" asp-route-officehoursid="@officehours.officeHoursID">Select</a>
+                </td>
+            </tr>
+        }
+    }
+</tbody>
+</table>
+
+
+<br />
+<br />
+<br />
+<br />
+
+<h3>View Upcoming Office Hours</h3>
+
+<form asp-page-handler="ViewOfficeHours" method="post">
+    <button class="btn btn-primary Btn2">Click</button>
+</form>
+
+
+<br />
+<br />
+<br />
+<br />
+
+<h3>Schedule a Meeting</h3>
+
+<form asp-page-handler="ScheduleMeeting" method="post">
+    <button class="btn btn-primary Btn2">Click</button>
+</form>
+
+
+<br />
+<br />
+
+<a asp-page="/StudentView/StudentLogin" class="btn btn-primary Btn2">Log Out</a>
+
+<style>
+    .form-inline {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .form-inline label {
+        margin-right: 10px;
+    }
+
+    .form-inline input {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+    .form-inline input[type="submit"] {
+        flex: 0;
+    }
+
+     .form-vertical {
+        width: 250px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-vertical label {
+      margin-bottom: 5px;
+    }
+
+    .form-vertical input {
+      margin-bottom: 10px;
+    }
+
+    .Btn1 {
+        color: black;
+        background-color: goldenrod;
+       
+    }
+
+    .Btn1:hover {
+        background-color: white;
+        outline: 2px solid goldenrod;
+        color: black;
+    }
+
+    .Btn2 {
+        color: black;
+        background-color: goldenrod;
+        width: 300px;
+    }
+
+    .Btn2:hover {
+        background-color: white;
+        outline: 2px solid goldenrod;
+        color: black;
+
+    }
+
+
+
+
+
+</style>

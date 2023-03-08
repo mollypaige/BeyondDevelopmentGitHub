@@ -1,0 +1,99 @@
+﻿@page
+@model Lab1.Pages.StudentView.StudentLoginModel
+@{
+}
+
+@{
+    if (HttpContext.Session.GetString("studentUsername") == null)
+    {
+        <div class="Form"> 
+        <form asp-page-handler="StudentLogin" method="post">
+            <label>Student Username:</label>
+            <input asp-for="studentUsername" class="form-control" placeholder="Enter Username" />
+            <br />
+            <label>Student Password:</label>
+            <input asp-for="Password" class="form-control" type="password" placeholder="Enter Password" />
+            <br />
+            <input type="submit" class="btn btn-primary Btns" value="login" />
+                <br />
+                <br />
+            <a class="btn btn-outline-primary Btns" asp-page="/Index"> Back </a>
+
+        </form>
+        </div>
+    }
+
+}
+
+
+@{
+    if (HttpContext.Session.GetString("studentUsername") != null)
+    {
+        <p class="text-success">@ViewData["LoginMessage"]</p>
+    }
+    else
+    {
+        <p class="text-danger">@ViewData["LoginMessage"]</p>
+    }
+}
+
+@{
+    if (HttpContext.Session.GetString("studentUsername") != null)
+    {
+        <p>User @HttpContext.Session.GetString("studentUsername") is logged in, are you sure you want to Log out?</p>
+        <br />
+        <a class="btn btn-outline-primary Btn2" asp-page="/StudentView/StudentLogin" asp-route-logout="true">Logout</a>
+        <a class="btn btn-primary Btn1" asp-page="/StudentView/StudentHome"> Go Back </a>
+    }
+}
+
+<br />
+<br />
+
+<a class="btn btn-outline-primary Btns" asp-page="/StudentView/CreateStudentAccount">Create Account</a>
+
+
+<style>
+
+
+     form {
+         width: 350px;
+         color: white;
+         position: center;
+  
+     }
+
+     .Btns
+     {
+        width: 350px;
+        background-color: goldenrod;
+        color: black;
+        font-family: Candara;
+        align-content: center;
+     }
+     .Btns:hover {
+            background-color: white;
+            outline: 2px solid goldenrod;
+            color: black;
+        }
+
+     .Btn1 {
+        background-color: white;
+        color: black;
+     }
+
+    .Btn1:hover {
+        background-color: white;
+        color: black;
+    }
+
+    .Btn2 {
+        background-color: goldenrod;
+        color: black;
+    }
+
+    .Btn2:hover {
+        background-color: goldenrod;
+        color: black;
+    }
+</style>
