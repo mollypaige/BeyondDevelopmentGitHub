@@ -1,0 +1,21 @@
+/* ADD YOUR CUSTOM CSS TO THIS FILE */
+
+h1{
+	font-size: 100px;
+	text-align: center;
+	margin-bottom: 100px;
+	font-weight: 1000;
+	font-family: 'Hind', sans-serif;
+	color: white;}
+
+body{
+	font-weight: 1000;
+	font-family: 'Noto Sans', sans-serif;
+	color: white;
+	background-image: url(https://cityprintsmapart.com/wp-content/uploads/2015/07/jmu_1.jpg);
+	background-color: purple;
+	background-blend-mode: lighten;
+}
+
+
+
